@@ -12,7 +12,7 @@ body {
   place-items: center;
   background-color: #219ebc;
 }
-
+/* main container section start */
 .math-container {
   width: 650px;
   height: 430px;
@@ -33,6 +33,8 @@ h4 {
   color: #ffb703;
   font-family: "Fjalla One", sans-serif;
 }
+
+/* main container section end */
 
 /* quiz test section start */
 
@@ -103,4 +105,66 @@ h4 {
 
 .wrong {
   background: red;
+}
+
+/* anwers section end */
+
+/* start button section */
+
+.start {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  display: grid;
+  place-items: center;
+  background: #219ebc;
+  opacity: 0.97;
+  top: 0;
+  left: 0;
+}
+
+.btnStart {
+  width: 175px;
+  background: #8ecae6;
+  padding: 10px 0px;
+  font-size: 35px;
+  border: 4px solid #023047;
+  border-left: 2px solid #023047;
+  border-top: 2px solid #023047;
+  color: #fb8500;
+  font-family: "Fjalla One", sans-serif;
+  text-align: center;
+  transition: 0.07s ease border;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btnStart:active {
+  border: 2px solid #023047;
+}
+
+/* start button section end */
+
+/* show game results and time for end round */
+
+.time {
+  width: 550px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border: 4px solid #023047;
+  border-top: 2px solid #023047;
+  border-left: 2px solid #023047;
+  /*#0000 agar rangda 4 ta bulsa opacity si ham 0 bulib qolgan buladi   */
+  border-radius: 10px;
+  padding: 25px 100px;
+}
+
+.time p {
+  font-weight: 300;
+  color: #ffb703;
+  font-family: "Fjalla One", sans-serif;
+  font-size: 20px;
 }

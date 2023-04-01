@@ -1,18 +1,21 @@
 "use strict";
 
 // variables
-let result;
-let chooseElm;
-let value1, value2;
-let correctIndex;
+let result, interval, chooseElm, value1, value2, correctIndex;
 let num1 = document.querySelector(".num-1");
 let num2 = document.querySelector(".num-2");
+let gameScore = 1;
 
 // const variables
 const mathElm = document.querySelector(".math-elm");
 const answer = document.querySelectorAll(".answer");
-const mathElm2 = ["+", "-", "*"];
+const btnStart = document.querySelector(".btnStart");
+const firstSection = document.querySelector(".start");
+const gameTime = document.querySelector(".game-time");
+const gameLevel = document.querySelector(".game-level");
 
+const mathElm2 = ["+", "-", "*"];
+mainFunc();
 function mainFunc() {
   // random functions
   function randomNum() {
@@ -67,8 +70,7 @@ function mainFunc() {
     });
   });
 }
-mainFunc();
-
+// function restore game
 function restoreFunc() {
   mainFunc();
   answer.forEach((item) => {
@@ -76,4 +78,40 @@ function restoreFunc() {
     item.classList.remove("correct");
     item.classList.remove("wrong");
   });
+}
+
+// game start sevtion
+
+// btnStart.addEventListener("click", () => {
+//   firstSection.style.display = "none";
+//   mainFunc();
+// });
+
+// round time
+function roundTime() {
+  let i = 10;
+  interval = setInterval(() => {
+    if (i <= 0) {
+      clearInterval(interval);
+      mainFunc();
+      roundTime();
+      gamelevel();
+    }
+    if (i < 10) {
+      gameTime.textContent = `time: 00:0${i--}`;
+    } else {
+      gameTime.textContent = `time: 00:${i--}`;
+    }
+  }, 1000);
+}
+roundTime();
+
+// round level
+function gamelevel() {
+  ++gameScore;
+  if (gameScore <= 2) {
+    gameLevel.textContent = `level: ${gameScore}/10`;
+  } else {
+    clearInterval(interval);
+  }
 }

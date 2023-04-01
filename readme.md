@@ -10,7 +10,7 @@
 
 -- math-quiz-app version 2
 
--- 1 uyinga kirganda start degan button bulishi kerak ushani bosgandan kiyin uyin boshlanishi kerak
+-- 1 uyinga kirganda start degan button bulishi kerak ushani bosgandan kiyin uyin boshlanishi kerak👍🏿
 -- 2 har bir rauntga 10 soniya vaqt berish kerak
 -- 3 agar vaqtida topsa qolgan vaqtning kiyingi uyinga qushib berishi kerak
 -- 4 gar to'g'ri javob bera olmasa kiyingi rauntning 2 sekundini olib quyishi kerak
