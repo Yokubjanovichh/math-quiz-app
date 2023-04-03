@@ -28,3 +28,4 @@
 - kodlarni clean qilish kerak;
 
 
+- link to project 👉🏼 https://quiz-math-app.netlify.app/
