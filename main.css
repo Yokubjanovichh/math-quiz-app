@@ -168,3 +168,45 @@ h4 {
   font-family: "Fjalla One", sans-serif;
   font-size: 20px;
 }
+
+/* score section start */
+
+.score {
+  width: 600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border: 4px solid #023047;
+  border-top: 2px solid #023047;
+  border-left: 2px solid #023047;
+  /*#0000 agar rangda 4 ta bulsa opacity si ham 0 bulib qolgan buladi   */
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+.scoreChild {
+  width: 30px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
+  border: 4px solid #023047;
+  border-top: 2px solid #023047;
+  border-left: 2px solid #023047;
+  transform: skew(-5deg);
+}
+
+/* game status */
+
+.win {
+  background: greenyellow;
+}
+
+.lose {
+  background: red;
+}
+
+.timeOut {
+  background: #ccc;
+}
