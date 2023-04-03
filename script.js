@@ -4,6 +4,7 @@
 let result, interval, chooseElm, value1, value2, correctIndex, btnInterval;
 let num1 = document.querySelector(".num-1");
 let num2 = document.querySelector(".num-2");
+let mainResults = { qora: 0, qizil: 0, kuk: 0 };
 let gameScore = 1,
   levelTime,
   oldTime = 0;
@@ -17,9 +18,12 @@ const gameTime = document.querySelector(".game-time");
 const gameLevel = document.querySelector(".game-level");
 const scoreChild = document.querySelectorAll(".scoreChild");
 const mathElm2 = ["+", "-", "*"];
+const results = document.querySelector(".results");
+const newGame = document.querySelector(".newGame");
+const showResult = document.querySelector(".showResult");
+const resTimeOutP = document.querySelectorAll(".resTimeOut p");
 
-// mainFunc();
-
+//elements random function
 function mainFunc() {
   // random element
   function randomNum() {
@@ -80,7 +84,6 @@ function findCorrectAnswer() {
           restoreFunc();
           mainFunc();
         }
-        console.log("hello");
       }, 1000);
     });
   });
@@ -110,6 +113,15 @@ function roundTime() {
   levelTime = 10;
   levelTime += oldTime;
   interval = setInterval(() => {
+    if (levelTime <= 0) {
+      oldTime = -1;
+      ++mainResults.qora;
+      scoreChild[gameScore - 1].classList.add("timeOut");
+      clearInterval(interval);
+      roundTime();
+      mainFunc();
+      levelFunc();
+    }
     let minutes = "00",
       seconds;
     if (levelTime >= 60) {
@@ -120,14 +132,6 @@ function roundTime() {
     seconds = Math.floor(levelTime % 60, 10);
     seconds = seconds < 10 ? "0" + seconds : seconds;
     gameTime.textContent = `time: ${minutes}:${seconds}`;
-    if (levelTime <= 0) {
-      oldTime = -2;
-      scoreChild[gameScore - 1].classList.add("timeOut");
-      clearInterval(interval);
-      roundTime();
-      mainFunc();
-      levelFunc();
-    }
   }, 1000);
 }
 
@@ -137,9 +141,11 @@ function levelFunc() {
   if (gameScore <= 10) {
     gameLevel.textContent = `level: ${gameScore}/10`;
   } else {
+    showMainResults();
     clearInterval(interval);
     levelTime = 10;
     gameTime.textContent = `time: 00:${levelTime}`;
+    console.log(mainResults);
   }
 }
 
@@ -147,7 +153,8 @@ function levelFunc() {
 answer.forEach((item) => {
   item.addEventListener("click", () => {
     if (item.textContent == result) {
-      oldTime = levelTime;
+      oldTime = levelTime + 1;
+      ++mainResults.kuk;
       clearInterval(interval);
       scoreChild[gameScore - 1].classList.add("win");
       roundTime();
@@ -155,13 +162,47 @@ answer.forEach((item) => {
         levelFunc();
       }, 1000);
     } else {
-      oldTime = -2;
+      oldTime = -1;
+      ++mainResults.qizil;
       clearInterval(interval);
       scoreChild[gameScore - 1].classList.add("lose");
       roundTime();
       setTimeout(() => {
         levelFunc();
       }, 1000);
+    }
+  });
+});
+
+// show main results
+function showMainResults() {
+  showResult.classList.add("showResultFlex");
+  resTimeOutP[0].textContent = ` ${mainResults.qora}/10`;
+  resTimeOutP[1].textContent = ` ${mainResults.qizil}/10`;
+  resTimeOutP[2].textContent = ` ${mainResults.kuk}/10`;
+}
+
+// clicking newGame btn
+
+newGame.addEventListener("click", () => {
+  showResult.classList.remove("showResultFlex");
+  mainResults = { qora: 0, qizil: 0, kuk: 0 };
+  gameScore = 0;
+  levelFunc();
+  restoreFunc();
+  roundTime();
+  mainFunc();
+  scoreChild.forEach((item) => {
+    if (item.classList.contains("win")) {
+      item.classList.remove("win");
+    }
+
+    if (item.classList.contains("lose")) {
+      item.classList.remove("lose");
+    }
+
+    if (item.classList.contains("timeOut")) {
+      item.classList.remove("timeOut");
     }
   });
 });
