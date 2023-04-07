@@ -26,8 +26,6 @@ const toPosition = [];
 const toOldResults = [];
 const toCorrectAnswers = [];
 const pushResult = { right: null, wrong: null };
-roundTime();
-mainFunc();
 
 //elements random function
 function mainFunc() {
@@ -82,7 +80,7 @@ scoreChild.forEach((item, idx) => {
     scoreChild.forEach((item) => {
       item.classList.remove("scoreChildActive");
     });
-    item.classList.add("scoreChildActive");
+    if (idx < gameScore) item.classList.add("scoreChildActive");
     // bosilgan raundagi qiymatlarni olish
     value1 = toPosition[idx][0];
     chooseElm = toPosition[idx][1];
@@ -162,11 +160,11 @@ function restoreFunc() {
 }
 // game start section
 
-// btnStart.addEventListener("click", () => {
-//   roundTime();
-//   firstSection.style.display = "none";
-//   mainFunc();
-// });
+btnStart.addEventListener("click", () => {
+  roundTime();
+  firstSection.style.display = "none";
+  mainFunc();
+});
 
 // round time
 function roundTime() {
@@ -179,6 +177,7 @@ function roundTime() {
         item.classList.remove("correct");
         item.classList.remove("wrong");
       });
+
       oldTime = -1;
       ++mainResults.qora;
       scoreChild[gameScore - 1].classList.add("timeOut");
@@ -206,6 +205,10 @@ function roundTime() {
 // round level
 function levelFunc() {
   ++gameScore;
+  scoreChild.forEach((item) => {
+    item.classList.remove("scoreChildActive");
+  });
+  scoreChild[gameScore - 1].classList.add("scoreChildActive");
   if (gameScore <= 10) {
     gameLevel.textContent = `level: ${gameScore}/10`;
   } else {
