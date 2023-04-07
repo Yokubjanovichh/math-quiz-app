@@ -7,8 +7,8 @@ let num2 = document.querySelector(".num-2");
 let mainResults = { qora: 0, qizil: 0, kuk: 0 };
 let gameScore = 1,
   levelTime,
-  oldTime = 0;
-
+  oldTime = 0,
+  mainAnwes;
 // const variables
 const mathElm = document.querySelector(".math-elm");
 const answer = document.querySelectorAll(".answer");
@@ -22,6 +22,12 @@ const results = document.querySelector(".results");
 const newGame = document.querySelector(".newGame");
 const showResult = document.querySelector(".showResult");
 const resTimeOutP = document.querySelectorAll(".resTimeOut p");
+const toPosition = [];
+const toOldResults = [];
+const toCorrectAnswers = [];
+const pushResult = { right: null, wrong: null };
+roundTime();
+mainFunc();
 
 //elements random function
 function mainFunc() {
@@ -40,6 +46,9 @@ function mainFunc() {
   num2.textContent = value2;
   mathElm.textContent = chooseElm;
 
+  // save positions
+  let newVariables = [value1, chooseElm, value2];
+  toPosition.push([...newVariables]);
   // qiymat //eval matematik ammalarni bajarish uchun ishlatiladi
   result = eval(`${+value1}${chooseElm}${+value2}`);
 
@@ -49,7 +58,7 @@ function mainFunc() {
   // renderda tanlangan btning textcontentiga qiymat yuborish
   // answer[btnForResult].textContent = result;
 
-  let mainAnwes = [result, result + 2, result - 2, result + 1];
+  mainAnwes = [result, result + 2, result - 2, result + 1];
   mainAnwes = mainAnwes.sort(() => Math.random() - 0.5);
   // find the correct index
   mainAnwes.filter((item, idx) => {
@@ -57,6 +66,7 @@ function mainFunc() {
       correctIndex = idx;
     }
   });
+  toOldResults.push([...mainAnwes]);
 
   // qiymatlarni buttonlarga berish
   answer.forEach((item, idx) => {
@@ -65,9 +75,59 @@ function mainFunc() {
   findCorrectAnswer();
 }
 
+// to position
+scoreChild.forEach((item, idx) => {
+  item.addEventListener("click", () => {
+    // show active position
+    scoreChild.forEach((item) => {
+      item.classList.remove("scoreChildActive");
+    });
+    item.classList.add("scoreChildActive");
+    // bosilgan raundagi qiymatlarni olish
+    value1 = toPosition[idx][0];
+    chooseElm = toPosition[idx][1];
+    value2 = toPosition[idx][2];
+    mainAnwes = toOldResults[idx];
+    // rountdagi qiymatlarni ekranga chiqarish
+    num1.textContent = value1;
+    num2.textContent = value2;
+    mathElm.textContent = chooseElm;
+    // bosilgan raundagi javoblarni olib ekranga chiqarish
+    answer.forEach((item, idx) => {
+      item.textContent = mainAnwes[idx];
+    });
+  });
+});
+
+scoreChild.forEach((elm, idx) => {
+  elm.addEventListener("click", () => {
+    if (elm.classList.contains("win") || elm.classList.contains("lose") || elm.classList.contains("timeOut")) {
+      answer.forEach((item) => {
+        item.style.pointerEvents = "none";
+      });
+    } else {
+      answer.forEach((item) => {
+        item.style.pointerEvents = "all";
+      });
+    }
+    answer.forEach((item) => {
+      item.classList.remove("correct");
+      item.classList.remove("wrong");
+    });
+    if (toCorrectAnswers[idx] != undefined) {
+      if (toCorrectAnswers[idx].right != null) {
+        answer[toCorrectAnswers[idx].right].classList.add("correct");
+      }
+      if (toCorrectAnswers[idx].wrong != null) {
+        answer[toCorrectAnswers[idx].wrong].classList.add("wrong");
+      }
+    }
+  });
+});
+
 // check correct btn
 function findCorrectAnswer() {
-  answer.forEach((item) => {
+  answer.forEach((item, idx) => {
     item.addEventListener("click", () => {
       if (item.textContent == result) {
         item.classList.add("correct");
@@ -100,13 +160,13 @@ function restoreFunc() {
     item.classList.remove("wrong");
   });
 }
-// game start sevtion
+// game start section
 
-btnStart.addEventListener("click", () => {
-  roundTime();
-  firstSection.style.display = "none";
-  mainFunc();
-});
+// btnStart.addEventListener("click", () => {
+//   roundTime();
+//   firstSection.style.display = "none";
+//   mainFunc();
+// });
 
 // round time
 function roundTime() {
@@ -114,9 +174,17 @@ function roundTime() {
   levelTime += oldTime;
   interval = setInterval(() => {
     if (levelTime <= 0) {
+      answer.forEach((item) => {
+        item.style.pointerEvents = "all";
+        item.classList.remove("correct");
+        item.classList.remove("wrong");
+      });
       oldTime = -1;
       ++mainResults.qora;
       scoreChild[gameScore - 1].classList.add("timeOut");
+      pushResult.right = null;
+      pushResult.wrong = null;
+      toCorrectAnswers.push({ ...pushResult });
       clearInterval(interval);
       roundTime();
       mainFunc();
@@ -170,6 +238,20 @@ answer.forEach((item) => {
       setTimeout(() => {
         levelFunc();
       }, 1000);
+    }
+  });
+});
+
+// get indexes in results
+answer.forEach((item, idx) => {
+  item.addEventListener("click", () => {
+    if (item.textContent == result) {
+      pushResult.right = correctIndex;
+      toCorrectAnswers.push({ ...pushResult });
+    } else {
+      pushResult.right = correctIndex;
+      pushResult.wrong = idx;
+      toCorrectAnswers.push({ ...pushResult });
     }
   });
 });

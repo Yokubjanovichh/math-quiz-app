@@ -24,9 +24,22 @@
 
 ## update v3
 
-- uyin tugagandan kiyin buttonlar deseable bulib qolishi kerak;
-- vaqt bilan muoni to'g'irlash kerak
-- raund 10 bulganda umumiy natijani qaytarish kerak;
-- kodlarni clean qilish kerak;
+- uyin tugagandan kiyin buttonlar deseable bulib qolishi kerak;👍🏿
+- vaqt bilan muoni to'g'irlash kerak👍🏿
+- raund 10 bulganda umumiy natijani qaytarish kerak;👍🏿
+- kodlarni clean qilish kerak; --buni qila olmadim😆
+
+## update v 3.1
+
+- raundlarga uta olish👍🏿
+- raundlardigi qiymatlarni qaytarish 👍🏿
+- raundagi natijalarni qaytarish 👍🏿
+- roundagi natijalarni qaytarish {
+  _ agar tug'ri javob topilgan bulsa correct answerni array push qilish kerak;👍🏿
+  _ agar noto'g'ri javob keritilgan bulsa to'g'ri va noto'g'ri javob ni arrayga push qilish kerak;👍🏿
+  }
+- roundagi to'g'ri javobni kursatish;👍🏿
+- roundagi noto'g'ri javobni ko'rsatish;👍🏿
+- qaysi raunda turganini kursatish;
 
 - link to project 👉🏼 https://quiz-math-app.netlify.app/
