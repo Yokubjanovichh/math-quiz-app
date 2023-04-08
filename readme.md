@@ -10,7 +10,7 @@
 - 3 qolgan buttonlarni qiymati resultdagi qiymat bilan bir hil bulmasligi kerak👍🏿
 - 4 buttonlarni qolgan buttonlarga qiymat berayotganda javob kiritilgan button inobotga olmasligi kerak => boshqacha yul qildim yani turtla qiymatni ham oldib urnini render qilib quyib yubordim👍🏿
 
-## math-quiz-app v1
+## math-quiz-app v2
 
 - 1 uyinga kirganda start degan button bulishi kerak ushani bosgandan kiyin uyin boshlanishi kerak👍🏿
 - 2 har bir rauntga 10 soniya vaqt berish kerak👍🏿
