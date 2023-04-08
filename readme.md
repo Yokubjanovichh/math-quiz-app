@@ -40,6 +40,14 @@
   }
 - roundagi to'g'ri javobni kursatish;👍🏿
 - roundagi noto'g'ri javobni ko'rsatish;👍🏿
-- qaysi raunda turganini kursatish;
+- qaysi raunda turganini kursatish;👍🏿
+
+## update 3.2
+
+-- muomolar:
+- raundlarga qaytganda to'g'ri va noto'g'ri javoblarni kursatishda muomo bor;👍🏿
+- new game bosilganda old time saqlanib qolgan ekan, new game bosilganda old time 0 ga tenglab quyish👍🏿
+
+
 
 - link to project 👉🏼 https://quiz-math-app.netlify.app/

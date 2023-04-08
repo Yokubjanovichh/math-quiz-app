@@ -9,6 +9,8 @@ let gameScore = 1,
   levelTime,
   oldTime = 0,
   mainAnwes;
+let toCorrectAnswers = [];
+
 // const variables
 const mathElm = document.querySelector(".math-elm");
 const answer = document.querySelectorAll(".answer");
@@ -24,7 +26,6 @@ const showResult = document.querySelector(".showResult");
 const resTimeOutP = document.querySelectorAll(".resTimeOut p");
 const toPosition = [];
 const toOldResults = [];
-const toCorrectAnswers = [];
 const pushResult = { right: null, wrong: null };
 
 //elements random function
@@ -55,7 +56,6 @@ function mainFunc() {
   // let btnForResult = Math.floor(Math.random() * (answer.length - 1 + 1));
   // renderda tanlangan btning textcontentiga qiymat yuborish
   // answer[btnForResult].textContent = result;
-
   mainAnwes = [result, result + 2, result - 2, result + 1];
   mainAnwes = mainAnwes.sort(() => Math.random() - 0.5);
   // find the correct index
@@ -65,7 +65,6 @@ function mainFunc() {
     }
   });
   toOldResults.push([...mainAnwes]);
-
   // qiymatlarni buttonlarga berish
   answer.forEach((item, idx) => {
     item.textContent = mainAnwes[idx];
@@ -112,12 +111,10 @@ scoreChild.forEach((elm, idx) => {
       item.classList.remove("correct");
       item.classList.remove("wrong");
     });
-    if (toCorrectAnswers[idx] != undefined) {
-      if (toCorrectAnswers[idx].right != null) {
-        answer[toCorrectAnswers[idx].right].classList.add("correct");
-      }
-      if (toCorrectAnswers[idx].wrong != null) {
-        answer[toCorrectAnswers[idx].wrong].classList.add("wrong");
+    if (toCorrectAnswers[idx]?.right != null) {
+      answer[toCorrectAnswers[idx]?.right].classList.add("correct");
+      if (toCorrectAnswers[idx]?.wrong != null) {
+        answer[toCorrectAnswers[idx]?.wrong].classList.add("wrong");
       }
     }
   });
@@ -125,7 +122,7 @@ scoreChild.forEach((elm, idx) => {
 
 // check correct btn
 function findCorrectAnswer() {
-  answer.forEach((item, idx) => {
+  answer.forEach((item) => {
     item.addEventListener("click", () => {
       if (item.textContent == result) {
         item.classList.add("correct");
@@ -184,10 +181,11 @@ function roundTime() {
       pushResult.right = null;
       pushResult.wrong = null;
       toCorrectAnswers.push({ ...pushResult });
+      console.log(toCorrectAnswers);
       clearInterval(interval);
       roundTime();
       mainFunc();
-      levelFunc();
+      if (gameScore <= 10) levelFunc();
     }
     let minutes = "00",
       seconds;
@@ -205,10 +203,6 @@ function roundTime() {
 // round level
 function levelFunc() {
   ++gameScore;
-  scoreChild.forEach((item) => {
-    item.classList.remove("scoreChildActive");
-  });
-  scoreChild[gameScore - 1].classList.add("scoreChildActive");
   if (gameScore <= 10) {
     gameLevel.textContent = `level: ${gameScore}/10`;
   } else {
@@ -218,6 +212,10 @@ function levelFunc() {
     gameTime.textContent = `time: 00:${levelTime}`;
     console.log(mainResults);
   }
+  scoreChild.forEach((item) => {
+    item.classList.remove("scoreChildActive");
+  });
+  scoreChild[gameScore - 1]?.classList.add("scoreChildActive");
 }
 
 // anwer larni bosganda level oshishi va vaqt yangilanishi uchun
@@ -250,11 +248,14 @@ answer.forEach((item, idx) => {
   item.addEventListener("click", () => {
     if (item.textContent == result) {
       pushResult.right = correctIndex;
+      pushResult.wrong = null;
       toCorrectAnswers.push({ ...pushResult });
+      console.log(toCorrectAnswers);
     } else {
       pushResult.right = correctIndex;
       pushResult.wrong = idx;
       toCorrectAnswers.push({ ...pushResult });
+      console.log(toCorrectAnswers);
     }
   });
 });
@@ -272,7 +273,9 @@ function showMainResults() {
 newGame.addEventListener("click", () => {
   showResult.classList.remove("showResultFlex");
   mainResults = { qora: 0, qizil: 0, kuk: 0 };
+  toCorrectAnswers = [];
   gameScore = 0;
+  oldTime = 0;
   levelFunc();
   restoreFunc();
   roundTime();
